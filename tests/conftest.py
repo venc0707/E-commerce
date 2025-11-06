@@ -1,17 +1,43 @@
 import pytest
-from src.models import Product, Category
+
+from src.models import Category, Product
 
 
 @pytest.fixture
 def first_product():
-    return Product('Помидор','Черри', 150, 50)
+    return Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
 
 
 @pytest.fixture
 def second_product():
-    return Product('Огурец','Гладкий', 100, 100)
+    return Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
+
+
+@pytest.fixture
+def new_product1():
+    return {
+        "name": "Samsung Galaxy S23 Ultra",
+        "description": "256GB, Серый цвет, 200MP камера",
+        "price": 180000.0,
+        "quantity": 5,
+    }
+
+
+@pytest.fixture
+def new_product2():
+    return {"name": "Xiaomi Redmi Note 11", "description": "1024GB, Синий", "price": 31000.0, "quantity": 14}
+
+
+@pytest.fixture(autouse=True)
+def reset_counters():
+    Category.category_count = 0
+    Category.product_count = 0
 
 
 @pytest.fixture
 def first_category(first_product, second_product):
-    return Category('vegetables', 'овощи', [first_product, second_product])
+    return Category(
+        "Смартфоны",
+        "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
+        [first_product, second_product],
+    )
