@@ -1,5 +1,7 @@
 from unittest.mock import patch
 
+import pytest
+
 from src.models import Category, Product
 
 
@@ -69,3 +71,25 @@ def test_new_product(new_product1, first_category, new_product2):
         first_category.products
         == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 10 шт.\nIphone 15, 210000.0 руб. Остаток: 8 шт.\nXiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\n"
     )
+
+
+def test_str_product(first_product):
+    assert str(first_product) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
+
+
+def test_str_category(first_category):
+    assert str(first_category) == "Смартфоны, количество продуктов: 13 шт."
+
+
+def test_add_products(first_product, second_product):
+    assert first_product + second_product == 2580000
+
+
+def test_products_iter(product_iter):
+    iter(product_iter)
+    assert product_iter.index == 0
+    assert next(product_iter).name == "Samsung Galaxy S23 Ultra"
+    assert next(product_iter).name == "Iphone 15"
+
+    with pytest.raises(StopIteration):
+        next(product_iter)
