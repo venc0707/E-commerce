@@ -1,6 +1,7 @@
 import pytest
 
 from src.models import Category, Product
+from src.product_iterator import ProductsIterator
 
 
 @pytest.fixture
@@ -41,3 +42,8 @@ def first_category(first_product, second_product):
         "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
         [first_product, second_product],
     )
+
+
+@pytest.fixture
+def product_iter(first_category):
+    return ProductsIterator(first_category)
