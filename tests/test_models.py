@@ -33,9 +33,14 @@ def test_add_product(first_category, new_product1):
     assert first_category.category_count == 1
     assert first_category.product_count == 2
 
-    first_category.add_product(new_product1)
+    product_obj = Product(
+        name=new_product1["name"],
+        price=new_product1["price"],
+        quantity=new_product1["quantity"],
+        description=new_product1["description"],
+    )
+    first_category.add_product(product_obj)
 
-    assert first_category.category_count == 1
     assert first_category.product_count == 3
 
 
@@ -93,3 +98,31 @@ def test_products_iter(product_iter):
 
     with pytest.raises(StopIteration):
         next(product_iter)
+
+
+def test_smartphone1(smartphone1):
+    assert smartphone1.efficiency == 95.5
+    assert smartphone1.model == "S23 Ultra"
+    assert smartphone1.memory == 256
+    assert smartphone1.color == "Серый"
+
+
+def test_grass1(grass1):
+    assert grass1.country == "Россия"
+    assert grass1.germination_period == "7 дней"
+    assert grass1.color == "Зеленый"
+
+
+def test_smartphone_sum(smartphone1, smartphone2):
+    smartphone_sum = smartphone1 + smartphone2
+    assert smartphone_sum == 2580000.0
+
+
+def test_invalid_sum(smartphone1, grass1):
+    with pytest.raises(TypeError):
+        smartphone1 + grass1
+
+
+def test_add_no_product(first_category):
+    with pytest.raises(TypeError):
+        first_category.add_product("Not a product")
