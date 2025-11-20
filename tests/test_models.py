@@ -126,3 +126,9 @@ def test_invalid_sum(smartphone1, grass1):
 def test_add_no_product(first_category):
     with pytest.raises(TypeError):
         first_category.add_product("Not a product")
+
+
+def test_print_mixin(capsys):
+    Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+    message = capsys.readouterr()
+    assert message.out.strip() == 'Product(Samsung Galaxy S23 Ultra, 256GB, Серый цвет, 200MP камера, 180000.0, 5)'
